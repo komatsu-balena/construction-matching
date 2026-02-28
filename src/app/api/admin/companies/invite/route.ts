@@ -3,6 +3,7 @@ import { createClient } from '@/lib/supabase/server';
 import { createAdminClient } from '@/lib/supabase/admin';
 import { z } from 'zod';
 import crypto from 'crypto';
+import { sendInvitationEmail } from '@/lib/email/resend';
 
 const inviteSchema = z.object({
   companyName: z.string().min(1),
@@ -34,7 +35,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: '入力内容が不正です' }, { status: 400 });
   }
 
-  const { companyName, email, role } = parsed.data;
+  const { companyName, email, role, message } = parsed.data;
   const adminClient = createAdminClient();
 
   // Check if email already exists
@@ -82,9 +83,21 @@ export async function POST(req: NextRequest) {
   const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? 'http://localhost:3000';
   const inviteUrl = `${appUrl}/register?token=${token}`;
 
-  // In a real app, send email here using Resend/SendGrid/etc.
-  // For now, return the URL in the response for admin to share manually.
-  console.log(`[INVITE] ${email} → ${inviteUrl}`);
+  // 招待メールを送信
+  const emailResult = await sendInvitationEmail({
+    to: email,
+    companyName,
+    inviteUrl,
+    message,
+  });
 
-  return NextResponse.json({ inviteUrl, companyId: company.id });
+  if (!emailResult.success) {
+    console.warn('[INVITE] メール送信失敗（URLは有効）:', emailResult.error);
+  }
+
+  return NextResponse.json({
+    inviteUrl,
+    companyId: company.id,
+    emailSent: emailResult.success,
+  });
 }

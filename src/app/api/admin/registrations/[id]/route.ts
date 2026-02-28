@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
 import { createAdminClient } from '@/lib/supabase/admin';
 import { z } from 'zod';
+import { sendApprovalEmail } from '@/lib/email/resend';
 
 const ActionSchema = z.object({
   action: z.enum(['approve', 'reject']),
@@ -37,10 +38,10 @@ export async function PUT(
   const { action } = parsed.data;
   const adminClient = createAdminClient();
 
-  // 対象ユーザーの情報を取得
+  // 対象ユーザーの情報を取得（メール送信のためemail・full_nameも取得）
   const { data: targetUser } = await adminClient
     .from('users')
-    .select('id, company_id, is_active')
+    .select('id, email, full_name, company_id, is_active')
     .eq('id', id)
     .single();
 
@@ -55,12 +56,25 @@ export async function PUT(
       .update({ is_active: true })
       .eq('id', id);
 
-    // 会社も有効化
+    // 会社も有効化 & 会社名を取得
+    let companyName = '（会社名未設定）';
     if (targetUser.company_id) {
-      await adminClient
+      const { data: company } = await adminClient
         .from('companies')
         .update({ is_active: true })
-        .eq('id', targetUser.company_id);
+        .eq('id', targetUser.company_id)
+        .select('name')
+        .single();
+      if (company?.name) companyName = company.name;
+    }
+
+    // 承認通知メールを送信
+    if (targetUser.email) {
+      await sendApprovalEmail({
+        to: targetUser.email,
+        fullName: targetUser.full_name ?? targetUser.email,
+        companyName,
+      });
     }
 
     return NextResponse.json({ success: true, action: 'approved' });

@@ -39,7 +39,10 @@ export default function InviteCompanyPage() {
       if (!res.ok) {
         setError(data.error ?? '招待の送信に失敗しました');
       } else {
-        setSuccess(`${form.companyName} への招待メールを送信しました。招待リンク: ${data.inviteUrl}`);
+        const emailStatus = data.emailSent
+          ? '招待メールを送信しました。'
+          : 'メール送信をスキップしました（RESEND_API_KEY未設定）。';
+        setSuccess(`✅ ${form.companyName} への招待が完了しました。\n${emailStatus}\n\n招待リンク（コピー用）:\n${data.inviteUrl}`);
         setForm({ companyName: '', email: '', role: 'both', message: '' });
       }
     } catch {
