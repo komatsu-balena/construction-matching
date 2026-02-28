@@ -165,15 +165,10 @@ export default async function DashboardPage() {
             <Link href="/matches" className={styles.seeAll}>全て表示 →</Link>
           </div>
           <div className={styles.matchList}>
-            {recentMatches!.map((match: {
-              id: string;
-              matched_at: string;
-              company_a: { id: string; name: string; logo_url: string | null; prefecture: string } | null;
-              company_b: { id: string; name: string; logo_url: string | null; prefecture: string } | null;
-            }) => {
-              const partner = match.company_a?.id === myCompanyId
-                ? match.company_b
-                : match.company_a;
+            {(recentMatches as any[]).map((match: any) => {
+              const rawA = Array.isArray(match.company_a) ? match.company_a[0] : match.company_a;
+              const rawB = Array.isArray(match.company_b) ? match.company_b[0] : match.company_b;
+              const partner = rawA?.id === myCompanyId ? rawB : rawA;
               return (
                 <Link key={match.id} href={`/messages/${match.id}`} className={styles.matchItem}>
                   <div className={styles.matchAvatar}>

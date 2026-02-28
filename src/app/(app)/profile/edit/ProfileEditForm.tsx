@@ -326,7 +326,7 @@ export default function ProfileEditForm({ user, company, selectedLicenses: initL
                 >
                   <option value="">選択してください</option>
                   {PREFECTURES.map((p) => (
-                    <option key={p.code} value={p.name}>{p.name}</option>
+                    <option key={p.code} value={p.nameJa}>{p.nameJa}</option>
                   ))}
                 </select>
               </div>
@@ -435,11 +435,11 @@ export default function ProfileEditForm({ user, company, selectedLicenses: initL
             <h3 className={styles.sectionTitle}>建設業許可 ({licenses.length}件選択中)</h3>
             <div className={styles.licenseGrid}>
               {CONSTRUCTION_LICENSES.map((lic) => (
-                <label key={lic.id} className={`${styles.licenseItem} ${licenses.includes(lic.id) ? styles.licenseSelected : ''}`}>
+                <label key={lic.id} className={`${styles.licenseItem} ${licenses.includes(String(lic.id)) ? styles.licenseSelected : ''}`}>
                   <input
                     type="checkbox"
-                    checked={licenses.includes(lic.id)}
-                    onChange={() => toggleLicense(lic.id)}
+                    checked={licenses.includes(String(lic.id))}
+                    onChange={() => toggleLicense(String(lic.id))}
                     className={styles.checkbox}
                   />
                   <span className={styles.licenseName}>{lic.nameJa}</span>

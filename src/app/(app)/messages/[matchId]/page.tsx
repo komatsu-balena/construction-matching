@@ -35,7 +35,14 @@ export default async function ChatPage({
 
   if (!match) notFound();
 
-  const partner = match.company_a?.id === myCompanyId ? match.company_b : match.company_a;
+  const anyMatch = match as unknown as {
+    id: string; status: string;
+    company_a: { id: string; name: string; logo_url: string | null } | null;
+    company_b: { id: string; name: string; logo_url: string | null } | null;
+  };
+  const companyA = Array.isArray(anyMatch.company_a) ? (anyMatch.company_a as any[])[0] : anyMatch.company_a;
+  const companyB = Array.isArray(anyMatch.company_b) ? (anyMatch.company_b as any[])[0] : anyMatch.company_b;
+  const partner = companyA?.id === myCompanyId ? companyB : companyA;
 
   // 初期メッセージ取得
   const { data: initialMessages } = await supabase
@@ -85,7 +92,7 @@ export default async function ChatPage({
       {/* チャットウィンドウ（クライアントコンポーネント） */}
       <ChatWindow
         matchId={matchId}
-        initialMessages={initialMessages ?? []}
+        initialMessages={(initialMessages ?? []) as any}
         myCompanyId={myCompanyId ?? ''}
         currentUserId={user!.id}
       />

@@ -66,13 +66,7 @@ export default async function ContactsPage() {
             <div className={styles.empty}>コンタクトリクエストがありません</div>
           ) : (
             <div className={styles.list}>
-              {received.map((req: {
-                id: string;
-                status: string;
-                message: string;
-                created_at: string;
-                from_company: { id: string; name: string; prefecture: string; company_role: string; logo_url: string };
-              }) => (
+              {received.map((req: any) => (
                 <div key={req.id} className={styles.requestCard}>
                   <Link href={`/companies/${req.from_company.id}`} className={styles.companyInfo}>
                     <div className={styles.logo}>
@@ -118,13 +112,7 @@ export default async function ContactsPage() {
             <div className={styles.empty}>コンタクトリクエストを送っていません</div>
           ) : (
             <div className={styles.list}>
-              {sent.map((req: {
-                id: string;
-                status: string;
-                message: string;
-                created_at: string;
-                to_company: { id: string; name: string; prefecture: string; company_role: string; logo_url: string };
-              }) => (
+              {sent.map((req: any) => (
                 <div key={req.id} className={styles.requestCard}>
                   <Link href={`/companies/${req.to_company.id}`} className={styles.companyInfo}>
                     <div className={styles.logo}>

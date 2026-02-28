@@ -75,18 +75,7 @@ export default async function LikesPage() {
             </div>
           ) : (
             <div className={styles.grid}>
-              {receivedLikes.map((like: {
-                id: string;
-                created_at: string;
-                from_company: {
-                  id: string;
-                  name: string;
-                  prefecture: string;
-                  company_role: string;
-                  logo_url: string;
-                  description: string;
-                };
-              }) => (
+              {receivedLikes.map((like: any) => (
                 <LikeCard
                   key={like.id}
                   company={like.from_company}
@@ -110,18 +99,7 @@ export default async function LikesPage() {
             </div>
           ) : (
             <div className={styles.grid}>
-              {sentLikes.map((like: {
-                id: string;
-                created_at: string;
-                to_company: {
-                  id: string;
-                  name: string;
-                  prefecture: string;
-                  company_role: string;
-                  logo_url: string;
-                  description: string;
-                };
-              }) => (
+              {sentLikes.map((like: any) => (
                 <LikeCard
                   key={like.id}
                   company={like.to_company}

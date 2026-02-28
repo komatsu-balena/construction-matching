@@ -75,15 +75,10 @@ export default async function MessagesPage() {
         </div>
       ) : (
         <div className={styles.conversationList}>
-          {matches.map((match: {
-            id: string;
-            updated_at: string;
-            company_a: { id: string; name: string; logo_url: string | null; prefecture: string } | null;
-            company_b: { id: string; name: string; logo_url: string | null; prefecture: string } | null;
-          }) => {
-            const partner = match.company_a?.id === myCompanyId
-              ? match.company_b
-              : match.company_a;
+          {(matches as any[]).map((match: any) => {
+            const rawA = Array.isArray(match.company_a) ? match.company_a[0] : match.company_a;
+            const rawB = Array.isArray(match.company_b) ? match.company_b[0] : match.company_b;
+            const partner = rawA?.id === myCompanyId ? rawB : rawA;
             const lastMsg = lastMessages[match.id];
             const unread = unreadCounts[match.id] ?? 0;
 

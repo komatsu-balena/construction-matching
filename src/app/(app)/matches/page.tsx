@@ -44,14 +44,10 @@ export default async function MatchesPage() {
         </div>
       ) : (
         <div className={styles.grid}>
-          {matches.map((match: {
-            id: string;
-            matched_at: string;
-            match_score: number | null;
-            company_a: { id: string; name: string; logo_url: string | null; prefecture: string; company_role: string; employee_count: number | null } | null;
-            company_b: { id: string; name: string; logo_url: string | null; prefecture: string; company_role: string; employee_count: number | null } | null;
-          }) => {
-            const partner = match.company_a?.id === myCompanyId ? match.company_b : match.company_a;
+          {(matches as any[]).map((match: any) => {
+            const rawA = Array.isArray(match.company_a) ? match.company_a[0] : match.company_a;
+            const rawB = Array.isArray(match.company_b) ? match.company_b[0] : match.company_b;
+            const partner = rawA?.id === myCompanyId ? rawB : rawA;
             return (
               <div key={match.id} className={styles.card}>
                 <div className={styles.cardMain}>
