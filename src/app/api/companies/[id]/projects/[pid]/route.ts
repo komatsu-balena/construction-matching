@@ -22,13 +22,14 @@ async function checkAccess(supabase: Awaited<ReturnType<typeof createClient>>, u
 
 export async function PUT(
   req: NextRequest,
-  { params }: { params: { id: string; pid: string } }
+  { params }: { params: Promise<{ id: string; pid: string }> }
 ) {
+  const { id, pid } = await params;
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
-  if (!(await checkAccess(supabase, user.id, params.id))) {
+  if (!(await checkAccess(supabase, user.id, id))) {
     return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
   }
 
@@ -41,8 +42,8 @@ export async function PUT(
   const { data, error } = await supabase
     .from('project_records')
     .update(parsed.data)
-    .eq('id', params.pid)
-    .eq('company_id', params.id)
+    .eq('id', pid)
+    .eq('company_id', id)
     .select()
     .single();
 
@@ -53,21 +54,22 @@ export async function PUT(
 
 export async function DELETE(
   req: NextRequest,
-  { params }: { params: { id: string; pid: string } }
+  { params }: { params: Promise<{ id: string; pid: string }> }
 ) {
+  const { id, pid } = await params;
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
-  if (!(await checkAccess(supabase, user.id, params.id))) {
+  if (!(await checkAccess(supabase, user.id, id))) {
     return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
   }
 
   const { error } = await supabase
     .from('project_records')
     .delete()
-    .eq('id', params.pid)
-    .eq('company_id', params.id);
+    .eq('id', pid)
+    .eq('company_id', id);
 
   if (error) return NextResponse.json({ error: '削除に失敗しました' }, { status: 500 });
 

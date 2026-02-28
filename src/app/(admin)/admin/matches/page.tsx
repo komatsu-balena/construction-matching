@@ -77,23 +77,26 @@ export default async function AdminMatchesPage({
               status: string;
               matched_at: string;
               updated_at: string;
-              company_a: { id: string; name: string; prefecture: string };
-              company_b: { id: string; name: string; prefecture: string };
-            }, idx: number) => (
+              company_a: { id: string; name: string; prefecture: string }[] | { id: string; name: string; prefecture: string } | null;
+              company_b: { id: string; name: string; prefecture: string }[] | { id: string; name: string; prefecture: string } | null;
+            }, idx: number) => {
+              const companyA = Array.isArray(m.company_a) ? m.company_a[0] : m.company_a;
+              const companyB = Array.isArray(m.company_b) ? m.company_b[0] : m.company_b;
+              return (
               <tr key={m.id}>
                 <td className={styles.indexCell}>
                   {(page - 1) * perPage + idx + 1}
                 </td>
                 <td>
-                  <span className={styles.companyName}>{m.company_a?.name}</span>
-                  {m.company_a?.prefecture && (
-                    <span className={styles.prefecture}>{m.company_a.prefecture}</span>
+                  <span className={styles.companyName}>{companyA?.name}</span>
+                  {companyA?.prefecture && (
+                    <span className={styles.prefecture}>{companyA.prefecture}</span>
                   )}
                 </td>
                 <td>
-                  <span className={styles.companyName}>{m.company_b?.name}</span>
-                  {m.company_b?.prefecture && (
-                    <span className={styles.prefecture}>{m.company_b.prefecture}</span>
+                  <span className={styles.companyName}>{companyB?.name}</span>
+                  {companyB?.prefecture && (
+                    <span className={styles.prefecture}>{companyB.prefecture}</span>
                   )}
                 </td>
                 <td>{new Date(m.matched_at).toLocaleString('ja-JP', {
@@ -107,7 +110,8 @@ export default async function AdminMatchesPage({
                   })}
                 </td>
               </tr>
-            ))}
+              );
+            })}
             {(matches ?? []).length === 0 && (
               <tr>
                 <td colSpan={5} className={styles.empty}>まだマッチングがありません</td>

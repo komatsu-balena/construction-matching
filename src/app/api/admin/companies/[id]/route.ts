@@ -9,8 +9,9 @@ const patchSchema = z.object({
 
 export async function PATCH(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
+  const { id } = await params;
   const supabase = await createClient();
 
   const { data: { user } } = await supabase.auth.getUser();
@@ -36,7 +37,7 @@ export async function PATCH(
   const { data, error } = await adminClient
     .from('companies')
     .update(parsed.data)
-    .eq('id', params.id)
+    .eq('id', id)
     .select('id, name, is_active')
     .single();
 

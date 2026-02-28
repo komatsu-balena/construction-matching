@@ -95,8 +95,10 @@ export default async function AdminUsersPage({
               role: string;
               position: string;
               created_at: string;
-              companies: { id: string; name: string; is_active: boolean } | null;
-            }) => (
+              companies: { id: string; name: string; is_active: boolean }[] | { id: string; name: string; is_active: boolean } | null;
+            }) => {
+              const company = Array.isArray(u.companies) ? u.companies[0] : u.companies;
+              return (
               <tr key={u.id}>
                 <td>
                   <span className={styles.userName}>{u.full_name || '—'}</span>
@@ -114,10 +116,10 @@ export default async function AdminUsersPage({
                   </span>
                 </td>
                 <td>
-                  {u.companies ? (
-                    <Link href={`/admin/companies/${u.companies.id}`} className={styles.companyLink}>
-                      {u.companies.name}
-                      {!u.companies.is_active && (
+                  {company ? (
+                    <Link href={`/admin/companies/${company.id}`} className={styles.companyLink}>
+                      {company.name}
+                      {!company.is_active && (
                         <span className={styles.inactiveMark}> (無効)</span>
                       )}
                     </Link>
@@ -126,7 +128,8 @@ export default async function AdminUsersPage({
                 <td>{u.position || '—'}</td>
                 <td>{new Date(u.created_at).toLocaleDateString('ja-JP')}</td>
               </tr>
-            ))}
+              );
+            })}
             {(users ?? []).length === 0 && (
               <tr>
                 <td colSpan={6} className={styles.empty}>

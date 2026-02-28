@@ -13,8 +13,9 @@ const projectSchema = z.object({
 
 export async function GET(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
+  const { id } = await params;
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
@@ -22,7 +23,7 @@ export async function GET(
   const { data, error } = await supabase
     .from('project_records')
     .select('*, project_photos(id, url, caption, sort_order)')
-    .eq('company_id', params.id)
+    .eq('company_id', id)
     .order('completed_year', { ascending: false });
 
   if (error) return NextResponse.json({ error: 'Failed to fetch' }, { status: 500 });
@@ -32,8 +33,9 @@ export async function GET(
 
 export async function POST(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
+  const { id } = await params;
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
@@ -45,7 +47,7 @@ export async function POST(
     .eq('id', user.id)
     .single();
 
-  if (profile?.company_id !== params.id && profile?.role !== 'admin') {
+  if (profile?.company_id !== id && profile?.role !== 'admin') {
     return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
   }
 
@@ -57,7 +59,7 @@ export async function POST(
 
   const { data, error } = await supabase
     .from('project_records')
-    .insert({ ...parsed.data, company_id: params.id })
+    .insert({ ...parsed.data, company_id: id })
     .select()
     .single();
 
