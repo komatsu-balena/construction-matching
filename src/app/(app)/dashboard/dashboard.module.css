@@ -1,0 +1,332 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+/* ウェルカムバナー */
+.welcomeBanner {
+  background: var(--gradient-primary);
+  border-radius: var(--radius-xl);
+  padding: 28px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  box-shadow: var(--shadow-navy);
+}
+
+.welcomeContent {}
+
+.welcomeTitle {
+  font-size: 22px;
+  font-weight: 800;
+  color: white;
+  letter-spacing: -0.01em;
+  margin-bottom: 4px;
+}
+
+.welcomeDesc {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.profileCta {
+  flex-shrink: 0;
+  padding: 10px 20px;
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: var(--radius-md);
+  color: white;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background var(--transition-fast);
+}
+
+.profileCta:hover {
+  background: rgba(255, 255, 255, 0.22);
+  text-decoration: none;
+}
+
+/* 統計カード */
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.statCard {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow var(--transition-normal);
+}
+
+.statCard:hover {
+  box-shadow: var(--shadow-md);
+}
+
+.statIcon {
+  font-size: 28px;
+  width: 48px;
+  height: 48px;
+  background: var(--navy-50);
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.statInfo {
+  flex: 1;
+}
+
+.statValue {
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--navy-800);
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.statValueAlert {
+  color: var(--error);
+}
+
+.statLabel {
+  font-size: 12px;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.statLink {
+  font-size: 12px;
+  color: var(--navy-600);
+  text-decoration: none;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.statLink:hover {
+  text-decoration: underline;
+}
+
+/* セクション */
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.sectionHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.sectionTitle {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--navy-900);
+  letter-spacing: -0.01em;
+}
+
+.seeAll {
+  font-size: 13px;
+  color: var(--navy-600);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.seeAll:hover {
+  text-decoration: underline;
+}
+
+/* おすすめ企業グリッド */
+.recommendGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 12px;
+}
+
+.empty {
+  font-size: 14px;
+  color: var(--text-muted);
+  padding: 24px 0;
+}
+
+.companyCard {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 16px;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  transition: all var(--transition-normal);
+}
+
+.companyCard:hover {
+  border-color: var(--navy-200);
+  box-shadow: var(--shadow-card-hover);
+  transform: translateY(-2px);
+  text-decoration: none;
+}
+
+.companyCardAvatar {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-md);
+  background: var(--navy-50);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  flex-shrink: 0;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--navy-600);
+}
+
+.companyCardAvatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.companyCardInfo {
+  flex: 1;
+  min-width: 0;
+}
+
+.companyCardName {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom: 2px;
+}
+
+.companyCardMeta {
+  font-size: 11px;
+  color: var(--text-secondary);
+  margin-bottom: 2px;
+}
+
+.companyCardLicenses {
+  font-size: 11px;
+  color: var(--navy-600);
+  font-weight: 600;
+}
+
+/* マッチリスト */
+.matchList {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+
+.matchItem {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 20px;
+  text-decoration: none;
+  border-bottom: 1px solid var(--border);
+  transition: background var(--transition-fast);
+}
+
+.matchItem:last-child {
+  border-bottom: none;
+}
+
+.matchItem:hover {
+  background: var(--bg-hover);
+  text-decoration: none;
+}
+
+.matchAvatar {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-md);
+  background: var(--navy-50);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  flex-shrink: 0;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--navy-600);
+}
+
+.matchAvatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.matchInfo {
+  flex: 1;
+  min-width: 0;
+}
+
+.matchName {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.matchMeta {
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin-top: 2px;
+}
+
+.matchTime {
+  font-size: 12px;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+/* レスポンシブ */
+@media (max-width: 768px) {
+  .statsGrid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+
+  .statCard {
+    flex-direction: column;
+    text-align: center;
+    padding: 14px 10px;
+    gap: 8px;
+  }
+
+  .statLink { display: none; }
+
+  .welcomeBanner {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .statsGrid {
+    grid-template-columns: 1fr;
+  }
+  .statCard { flex-direction: row; }
+}

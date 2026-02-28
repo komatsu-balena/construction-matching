@@ -1,0 +1,120 @@
+/* =============================================
+   認証ページ共通レイアウト
+   ============================================= */
+
+.wrapper {
+  min-height: 100vh;
+  display: flex;
+}
+
+/* 左パネル（ブランディング） */
+.leftPanel {
+  width: 45%;
+  background: var(--gradient-hero);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  padding: 60px;
+}
+
+.leftContent {
+  position: relative;
+  z-index: 2;
+}
+
+.logo {
+  margin-bottom: 48px;
+}
+
+.logoText {
+  font-size: 24px;
+  font-weight: 800;
+  color: white;
+  letter-spacing: -0.02em;
+}
+
+.tagline {
+  font-size: 36px;
+  font-weight: 800;
+  color: white;
+  line-height: 1.3;
+  margin-bottom: 20px;
+  letter-spacing: -0.02em;
+}
+
+.subTagline {
+  font-size: 15px;
+  line-height: 1.8;
+  color: rgba(255, 255, 255, 0.72);
+}
+
+/* 装飾 */
+.decorCircle1 {
+  position: absolute;
+  right: -80px;
+  top: -80px;
+  width: 320px;
+  height: 320px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(59, 103, 208, 0.30) 0%, transparent 70%);
+  z-index: 1;
+}
+
+.decorCircle2 {
+  position: absolute;
+  left: -40px;
+  bottom: -100px;
+  width: 280px;
+  height: 280px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(30, 58, 138, 0.50) 0%, transparent 70%);
+  z-index: 1;
+}
+
+.decorGrid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+  background-size: 40px 40px;
+  z-index: 1;
+}
+
+/* 右パネル（フォーム） */
+.rightPanel {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 24px;
+  background: var(--bg-page);
+  overflow-y: auto;
+}
+
+.formContainer {
+  width: 100%;
+  max-width: 440px;
+}
+
+/* レスポンシブ */
+@media (max-width: 768px) {
+  .wrapper {
+    flex-direction: column;
+  }
+
+  .leftPanel {
+    width: 100%;
+    min-height: 200px;
+    padding: 32px 24px;
+  }
+
+  .tagline {
+    font-size: 24px;
+  }
+
+  .rightPanel {
+    padding: 32px 20px;
+  }
+}

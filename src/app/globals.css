@@ -1,0 +1,375 @@
+/* =============================================
+   建設マッチング - グローバルスタイル
+   ネイビーグラデーションデザインシステム
+   ============================================= */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  /* === ネイビーカラーパレット === */
+  --navy-950: #03091A;
+  --navy-900: #0A1628;
+  --navy-800: #0F2040;
+  --navy-750: #132848;
+  --navy-700: #152B55;
+  --navy-600: #1E3A8A;
+  --navy-500: #2B4FAD;
+  --navy-400: #3B67D0;
+  --navy-300: #5580E0;
+  --navy-200: #8AA8EE;
+  --navy-100: #C5D5F7;
+  --navy-50:  #EEF3FD;
+
+  /* === アクセントカラー === */
+  --gold:         #D4AF37;
+  --gold-light:   #F0D070;
+  --cyan:         #0EA5E9;
+  --cyan-light:   #BAE6FD;
+
+  /* === セマンティックカラー === */
+  --success:      #10B981;
+  --success-bg:   #ECFDF5;
+  --warning:      #F59E0B;
+  --warning-bg:   #FFFBEB;
+  --error:        #EF4444;
+  --error-bg:     #FEF2F2;
+  --info:         #3B82F6;
+  --info-bg:      #EFF6FF;
+
+  /* === サーフェス === */
+  --bg-page:        #F8FAFD;
+  --bg-card:        #FFFFFF;
+  --bg-sidebar:     var(--navy-900);
+  --bg-header:      var(--navy-800);
+  --bg-hover:       #F1F5F9;
+  --bg-muted:       #F8FAFC;
+
+  /* === テキスト === */
+  --text-primary:   #0F172A;
+  --text-secondary: #475569;
+  --text-muted:     #94A3B8;
+  --text-disabled:  #CBD5E1;
+  --text-on-dark:   rgba(255, 255, 255, 0.92);
+  --text-on-dark-muted: rgba(255, 255, 255, 0.60);
+  --text-link:      var(--navy-600);
+
+  /* === ボーダー === */
+  --border:         #E2E8F0;
+  --border-strong:  #CBD5E1;
+  --border-focus:   var(--navy-400);
+
+  /* === グラデーション === */
+  --gradient-logo:    linear-gradient(135deg, #1E3A8A 0%, #0A1628 40%, #152B55 100%);
+  --gradient-hero:    linear-gradient(160deg, #0A1628 0%, #1E3A8A 55%, #2B4FAD 100%);
+  --gradient-sidebar: linear-gradient(180deg, #0A1628 0%, #0F2040 100%);
+  --gradient-card:    linear-gradient(145deg, #FFFFFF 0%, #F8FAFD 100%);
+  --gradient-primary: linear-gradient(135deg, #1E3A8A 0%, #3B67D0 100%);
+  --gradient-hero-text: linear-gradient(135deg, #FFFFFF 0%, #C5D5F7 100%);
+
+  /* === スペーシング === */
+  --sidebar-width:  240px;
+  --header-height:  64px;
+  --content-max:    1200px;
+
+  /* === ボーダーラジウス === */
+  --radius-sm:  4px;
+  --radius-md:  8px;
+  --radius-lg:  12px;
+  --radius-xl:  16px;
+  --radius-2xl: 24px;
+  --radius-full: 9999px;
+
+  /* === シャドウ === */
+  --shadow-xs:    0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-sm:    0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-md:    0 4px 12px rgba(0, 0, 0, 0.08), 0 2px 4px rgba(0, 0, 0, 0.04);
+  --shadow-lg:    0 8px 24px rgba(0, 0, 0, 0.10), 0 4px 8px rgba(0, 0, 0, 0.05);
+  --shadow-xl:    0 16px 48px rgba(0, 0, 0, 0.14), 0 8px 16px rgba(0, 0, 0, 0.06);
+  --shadow-navy:  0 4px 20px rgba(10, 22, 40, 0.30);
+  --shadow-card-hover: 0 8px 32px rgba(30, 58, 138, 0.12);
+
+  /* === トランジション === */
+  --transition-fast:   150ms ease;
+  --transition-normal: 250ms ease;
+  --transition-slow:   400ms ease;
+
+  /* === フォント === */
+  --font-sans: 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', 'Noto Sans JP',
+               'Yu Gothic', 'YuGothic', -apple-system, BlinkMacSystemFont,
+               'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+/* =============================================
+   ベーススタイル
+   ============================================= */
+
+html {
+  font-family: var(--font-sans);
+  color: var(--text-primary);
+  background: var(--bg-page);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  min-height: 100vh;
+}
+
+a {
+  color: var(--text-link);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+button {
+  cursor: pointer;
+  font-family: inherit;
+  border: none;
+  background: none;
+}
+
+input, textarea, select {
+  font-family: inherit;
+  font-size: inherit;
+}
+
+/* =============================================
+   スクロールバー
+   ============================================= */
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-strong);
+  border-radius: var(--radius-full);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}
+
+/* =============================================
+   フォーカス
+   ============================================= */
+
+:focus-visible {
+  outline: 2px solid var(--navy-400);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+/* =============================================
+   ユーティリティクラス
+   ============================================= */
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+.truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* =============================================
+   グラデーションテキスト
+   ============================================= */
+
+.gradient-text {
+  background: var(--gradient-hero-text);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.gradient-text-navy {
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* =============================================
+   アニメーション
+   ============================================= */
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(16px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+@keyframes heartBeat {
+  0%   { transform: scale(1); }
+  14%  { transform: scale(1.3); }
+  28%  { transform: scale(1); }
+  42%  { transform: scale(1.3); }
+  70%  { transform: scale(1); }
+}
+
+.animate-fade-in      { animation: fadeIn var(--transition-normal) ease forwards; }
+.animate-slide-right  { animation: slideInRight var(--transition-normal) ease forwards; }
+.animate-pulse        { animation: pulse 2s ease infinite; }
+.animate-spin         { animation: spin 1s linear infinite; }
+.animate-heart        { animation: heartBeat 0.6s ease; }
+
+/* =============================================
+   スケルトンローダー
+   ============================================= */
+
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    #E2E8F0 25%,
+    #F1F5F9 50%,
+    #E2E8F0 75%
+  );
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.5s infinite;
+  border-radius: var(--radius-md);
+}
+
+@keyframes skeleton-shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* =============================================
+   レイアウト
+   ============================================= */
+
+.app-layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+.app-sidebar {
+  width: var(--sidebar-width);
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  background: var(--gradient-sidebar);
+  z-index: 100;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.app-main {
+  margin-left: var(--sidebar-width);
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.app-header {
+  height: var(--header-height);
+  background: var(--bg-header);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.app-content {
+  flex: 1;
+  padding: 32px 40px;
+  max-width: var(--content-max);
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* =============================================
+   レスポンシブ
+   ============================================= */
+
+@media (max-width: 768px) {
+  :root {
+    --sidebar-width: 0px;
+    --header-height: 56px;
+  }
+
+  .app-sidebar {
+    transform: translateX(-100%);
+    transition: transform var(--transition-normal);
+  }
+
+  .app-sidebar.open {
+    transform: translateX(0);
+  }
+
+  .app-main {
+    margin-left: 0;
+  }
+
+  .app-content {
+    padding: 20px 16px 80px; /* 80px = bottom nav height */
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .app-content {
+    padding: 24px 24px;
+  }
+}

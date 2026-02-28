@@ -1,0 +1,385 @@
+.page {
+  padding: 0;
+  max-width: 800px;
+}
+
+.pageHeader {
+  margin-bottom: 24px;
+}
+
+.backLink {
+  display: inline-block;
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  text-decoration: none;
+  margin-bottom: 12px;
+  transition: color var(--transition-fast);
+}
+
+.backLink:hover {
+  color: var(--navy-600);
+  text-decoration: none;
+}
+
+.pageTitle {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+/* ===== Tabs ===== */
+
+.tabs {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 24px;
+  background: var(--bg-muted);
+  border-radius: var(--radius-lg);
+  padding: 4px;
+  flex-wrap: wrap;
+}
+
+.tab {
+  flex: 1;
+  min-width: 100px;
+  padding: 9px 16px;
+  border-radius: var(--radius-md);
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  white-space: nowrap;
+}
+
+.tab:hover {
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.6);
+}
+
+.tabActive {
+  background: white;
+  color: var(--navy-700);
+  font-weight: 700;
+  box-shadow: var(--shadow-xs);
+}
+
+/* ===== Messages ===== */
+
+.error {
+  padding: 12px 16px;
+  background: var(--error-bg);
+  color: var(--error);
+  border-radius: var(--radius-md);
+  font-size: 0.875rem;
+  margin-bottom: 16px;
+  border: 1px solid #FCA5A5;
+}
+
+.successMsg {
+  padding: 12px 16px;
+  background: var(--success-bg);
+  color: #065F46;
+  border-radius: var(--radius-md);
+  font-size: 0.875rem;
+  margin-bottom: 16px;
+  border: 1px solid #6EE7B7;
+}
+
+/* ===== Card ===== */
+
+.card {
+  background: white;
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+  padding: 28px;
+}
+
+/* ===== Fields ===== */
+
+.fields {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-bottom: 24px;
+}
+
+.fieldRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.input,
+.select,
+.textarea {
+  padding: 10px 14px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-md);
+  font-size: 0.9rem;
+  color: var(--text-primary);
+  background: white;
+  transition: border-color var(--transition-fast);
+  font-family: inherit;
+  width: 100%;
+}
+
+.input:focus,
+.select:focus,
+.textarea:focus {
+  outline: none;
+  border-color: var(--navy-400);
+  box-shadow: 0 0 0 3px rgba(59, 103, 208, 0.1);
+}
+
+.textarea {
+  resize: vertical;
+  min-height: 100px;
+  line-height: 1.6;
+}
+
+/* ===== Form Actions ===== */
+
+.formActions {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+}
+
+.saveBtn {
+  padding: 11px 32px;
+  background: var(--gradient-primary);
+  color: white;
+  border: none;
+  border-radius: var(--radius-md);
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity var(--transition-fast);
+}
+
+.saveBtn:hover:not(:disabled) {
+  opacity: 0.9;
+}
+
+.saveBtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ===== Section ===== */
+
+.section {
+  margin-bottom: 28px;
+}
+
+.section:last-child {
+  margin-bottom: 0;
+}
+
+.sectionTitle {
+  font-size: 0.9375rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 14px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border);
+}
+
+/* ===== License Grid ===== */
+
+.licenseGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 8px;
+}
+
+.licenseItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  background: white;
+}
+
+.licenseItem:hover {
+  border-color: var(--navy-300);
+  background: var(--navy-50);
+}
+
+.licenseSelected {
+  border-color: var(--navy-400);
+  background: var(--navy-50);
+}
+
+.checkbox {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--navy-600);
+  flex-shrink: 0;
+}
+
+.licenseName {
+  font-size: 0.8125rem;
+  color: var(--text-primary);
+  flex: 1;
+  font-weight: 500;
+}
+
+.licenseCategory {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+
+/* ===== Tag Input ===== */
+
+.tagInput {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.tagInputField {
+  flex: 1;
+  padding: 9px 14px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-md);
+  font-size: 0.875rem;
+  color: var(--text-primary);
+  background: white;
+  transition: border-color var(--transition-fast);
+  font-family: inherit;
+}
+
+.tagInputField:focus {
+  outline: none;
+  border-color: var(--navy-400);
+}
+
+.addTagBtn {
+  padding: 9px 18px;
+  background: var(--navy-700);
+  color: white;
+  border: none;
+  border-radius: var(--radius-md);
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  min-height: 36px;
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  background: var(--navy-50);
+  color: var(--navy-700);
+  border-radius: var(--radius-full);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  border: 1px solid var(--navy-100);
+}
+
+.removeTagBtn {
+  background: none;
+  border: none;
+  color: var(--navy-400);
+  cursor: pointer;
+  font-size: 0.875rem;
+  padding: 0;
+  line-height: 1;
+  transition: color var(--transition-fast);
+}
+
+.removeTagBtn:hover {
+  color: var(--error);
+}
+
+.tagEmpty {
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+/* ===== Role Options ===== */
+
+.roleOptions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.roleOption {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 20px;
+  border: 2px solid var(--border);
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  transition: all var(--transition-fast);
+  background: white;
+}
+
+.roleOption:hover {
+  border-color: var(--navy-300);
+  color: var(--navy-700);
+}
+
+.roleOptionSelected {
+  border-color: var(--navy-600);
+  color: var(--navy-700);
+  background: var(--navy-50);
+}
+
+@media (max-width: 768px) {
+  .tabs {
+    flex-direction: row;
+    overflow-x: auto;
+  }
+
+  .tab {
+    flex: none;
+    padding: 8px 14px;
+  }
+
+  .fieldRow {
+    grid-template-columns: 1fr;
+  }
+
+  .licenseGrid {
+    grid-template-columns: 1fr 1fr;
+  }
+}

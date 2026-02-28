@@ -1,0 +1,254 @@
+/* =============================================
+   ランディングページ
+   ============================================= */
+
+.wrapper {
+  min-height: 100vh;
+  background: var(--bg-page);
+  display: flex;
+  flex-direction: column;
+}
+
+/* ヘッダー */
+.header {
+  background: var(--navy-900);
+  height: 64px;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.headerInner {
+  max-width: 1200px;
+  margin: 0 auto;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logoText {
+  font-size: 20px;
+  font-weight: 700;
+  background: var(--gradient-logo);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: brightness(2);
+  letter-spacing: -0.02em;
+}
+
+.loginBtn {
+  padding: 8px 20px;
+  background: var(--gradient-primary);
+  color: white;
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  font-size: 14px;
+  transition: opacity var(--transition-fast);
+  text-decoration: none;
+}
+
+.loginBtn:hover {
+  opacity: 0.88;
+  text-decoration: none;
+}
+
+/* ヒーロー */
+.hero {
+  background: var(--gradient-hero);
+  min-height: calc(100vh - 64px);
+  display: flex;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  padding: 80px 24px;
+}
+
+.heroContent {
+  max-width: 640px;
+  margin: 0 auto 0 calc(50% - 600px);
+  position: relative;
+  z-index: 2;
+}
+
+.heroEyebrow {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--navy-200);
+  margin-bottom: 20px;
+}
+
+.heroTitle {
+  font-size: clamp(36px, 5vw, 56px);
+  font-weight: 800;
+  line-height: 1.25;
+  color: white;
+  margin-bottom: 24px;
+  letter-spacing: -0.02em;
+}
+
+.heroDesc {
+  font-size: 17px;
+  line-height: 1.8;
+  color: rgba(255, 255, 255, 0.80);
+  margin-bottom: 40px;
+}
+
+.heroCta {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.ctaPrimary {
+  display: inline-flex;
+  align-items: center;
+  padding: 14px 32px;
+  background: white;
+  color: var(--navy-700);
+  border-radius: var(--radius-lg);
+  font-weight: 700;
+  font-size: 16px;
+  text-decoration: none;
+  box-shadow: var(--shadow-lg);
+  transition: all var(--transition-fast);
+}
+
+.ctaPrimary:hover {
+  background: var(--navy-50);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-xl);
+  text-decoration: none;
+}
+
+/* ヒーロー装飾 */
+.heroDecoration {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.heroDecorCircle1 {
+  position: absolute;
+  right: -100px;
+  top: -100px;
+  width: 500px;
+  height: 500px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(59, 103, 208, 0.25) 0%, transparent 70%);
+}
+
+.heroDecorCircle2 {
+  position: absolute;
+  right: 200px;
+  bottom: -150px;
+  width: 400px;
+  height: 400px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(30, 58, 138, 0.40) 0%, transparent 70%);
+}
+
+.heroDecorGrid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+/* 特徴セクション */
+.features {
+  padding: 96px 24px;
+  background: var(--bg-page);
+}
+
+.featuresInner {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.sectionTitle {
+  font-size: 32px;
+  font-weight: 800;
+  color: var(--navy-900);
+  text-align: center;
+  margin-bottom: 56px;
+  letter-spacing: -0.02em;
+}
+
+.featureGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 24px;
+}
+
+.featureCard {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  padding: 32px 28px;
+  transition: all var(--transition-normal);
+}
+
+.featureCard:hover {
+  border-color: var(--navy-200);
+  box-shadow: var(--shadow-card-hover);
+  transform: translateY(-4px);
+}
+
+.featureIcon {
+  font-size: 36px;
+  margin-bottom: 16px;
+}
+
+.featureCard h3 {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--navy-800);
+  margin-bottom: 10px;
+}
+
+.featureCard p {
+  font-size: 14px;
+  line-height: 1.75;
+  color: var(--text-secondary);
+}
+
+/* フッター */
+.footer {
+  background: var(--navy-900);
+  color: var(--text-on-dark-muted);
+  text-align: center;
+  padding: 24px;
+  font-size: 13px;
+  margin-top: auto;
+}
+
+/* レスポンシブ */
+@media (max-width: 768px) {
+  .heroContent {
+    margin: 0;
+    text-align: center;
+  }
+
+  .heroCta {
+    justify-content: center;
+  }
+
+  .hero {
+    padding: 60px 20px;
+    min-height: auto;
+  }
+}

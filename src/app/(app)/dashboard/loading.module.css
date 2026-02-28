@@ -1,0 +1,50 @@
+.page {
+  padding: 0;
+}
+
+.titleSkeleton {
+  height: 40px;
+  width: 280px;
+  border-radius: var(--radius-lg);
+  margin-bottom: 28px;
+}
+
+.statsRow {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.statSkeleton {
+  height: 96px;
+  border-radius: var(--radius-xl);
+}
+
+.sectionTitle {
+  height: 28px;
+  width: 160px;
+  border-radius: var(--radius-md);
+  margin-bottom: 16px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+}
+
+.cardSkeleton {
+  height: 180px;
+  border-radius: var(--radius-xl);
+}
+
+@media (max-width: 768px) {
+  .statsRow {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
