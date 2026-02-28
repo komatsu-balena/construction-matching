@@ -46,6 +46,10 @@ export default function ProfileEditForm({ user, company, selectedLicenses: initL
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
 
+  // 作成後に取得した会社IDを保持（company が null → 作成後に設定）
+  const [createdCompanyId, setCreatedCompanyId] = useState<string | null>(null);
+  const companyId = (company as any)?.id ?? createdCompanyId;
+
   // User form state
   const u = user as any;
   const [userForm, setUserForm] = useState({
@@ -128,7 +132,9 @@ export default function ProfileEditForm({ user, company, selectedLicenses: initL
   }
 
   async function saveCompany() {
-    if (!company) return;
+    if (!companyForm.name.trim()) { setError('会社名は必須です'); return; }
+    if (!companyForm.prefecture) { setError('都道府県を選択してください'); return; }
+
     setSaving(true);
     setError('');
     try {
@@ -146,17 +152,34 @@ export default function ProfileEditForm({ user, company, selectedLicenses: initL
         capital_amount: companyForm.capital_amount ? parseInt(companyForm.capital_amount) * 10000 : null,
         established_year: companyForm.founded_year ? parseInt(companyForm.founded_year) : null,
       };
-      const res = await fetch(`/api/companies/${company.id}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(body),
-      });
+
+      let res: Response;
+      if (companyId) {
+        // 既存会社を更新
+        res = await fetch(`/api/companies/${companyId}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(body),
+        });
+      } else {
+        // 会社を新規作成
+        res = await fetch('/api/companies', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(body),
+        });
+      }
+
       if (!res.ok) {
         const d = await res.json();
         setError(d.error ?? '保存に失敗しました');
       } else {
-        setSuccess('会社情報を更新しました');
-        setTimeout(() => setSuccess(''), 3000);
+        const d = await res.json();
+        if (!companyId && d.id) {
+          setCreatedCompanyId(d.id);
+        }
+        setSuccess('会社情報を保存しました');
+        setTimeout(() => { setSuccess(''); router.refresh(); }, 1500);
       }
     } catch {
       setError('通信エラーが発生しました');
@@ -166,12 +189,12 @@ export default function ProfileEditForm({ user, company, selectedLicenses: initL
   }
 
   async function saveLicenses() {
-    if (!company) return;
+    if (!companyId) return;
     setSaving(true);
     setError('');
     try {
       // 許可・得意工事を1回のAPIで保存
-      const res = await fetch(`/api/companies/${company.id}/licenses`, {
+      const res = await fetch(`/api/companies/${companyId}/licenses`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -194,11 +217,11 @@ export default function ProfileEditForm({ user, company, selectedLicenses: initL
   }
 
   async function saveSeeking() {
-    if (!company) return;
+    if (!companyId) return;
     setSaving(true);
     setError('');
     try {
-      const res = await fetch(`/api/companies/${company.id}`, {
+      const res = await fetch(`/api/companies/${companyId}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -300,7 +323,7 @@ export default function ProfileEditForm({ user, company, selectedLicenses: initL
       )}
 
       {/* Company Tab */}
-      {activeTab === 'company' && company && (
+      {activeTab === 'company' && (
         <div className={styles.card}>
           <div className={styles.fields}>
             <div className={styles.field}>
@@ -436,8 +459,17 @@ export default function ProfileEditForm({ user, company, selectedLicenses: initL
         </div>
       )}
 
+      {/* 会社未登録時のガイド */}
+      {(activeTab === 'licenses' || activeTab === 'seeking') && !companyId && (
+        <div className={styles.card}>
+          <p className={styles.noCompanyHint}>
+            ⚠️ 「会社基本情報」タブで会社情報を登録してから設定できます。
+          </p>
+        </div>
+      )}
+
       {/* Licenses Tab */}
-      {activeTab === 'licenses' && company && (
+      {activeTab === 'licenses' && companyId && (
         <div className={styles.card}>
           <div className={styles.section}>
             <h3 className={styles.sectionTitle}>建設業許可 ({licenses.length}件選択中)</h3>
@@ -494,7 +526,7 @@ export default function ProfileEditForm({ user, company, selectedLicenses: initL
       )}
 
       {/* Seeking Tab */}
-      {activeTab === 'seeking' && company && (
+      {activeTab === 'seeking' && companyId && (
         <div className={styles.card}>
           <div className={styles.section}>
             <h3 className={styles.sectionTitle}>求めるパートナーの役割</h3>

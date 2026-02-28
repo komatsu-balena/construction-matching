@@ -3,6 +3,16 @@
   max-width: 800px;
 }
 
+.noCompanyHint {
+  padding: 20px;
+  color: #92400E;
+  background: #FEF3C7;
+  border: 1px solid #FCD34D;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
 .pageHeader {
   margin-bottom: 24px;
 }

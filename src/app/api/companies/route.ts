@@ -61,3 +61,62 @@ export async function GET(req: NextRequest) {
     total_pages: Math.ceil((count ?? 0) / perPage),
   });
 }
+
+// 会社を新規作成（company_idがないユーザー用）
+export async function POST(req: NextRequest) {
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) return NextResponse.json({ error: '認証が必要です' }, { status: 401 });
+
+  // ユーザーが既に会社を持っているか確認
+  const { data: userData } = await supabase
+    .from('users')
+    .select('company_id, role')
+    .eq('id', user.id)
+    .single();
+
+  if (userData?.company_id) {
+    return NextResponse.json({ error: '既に会社が登録されています' }, { status: 400 });
+  }
+
+  const body = await req.json();
+
+  if (!body.name?.trim()) {
+    return NextResponse.json({ error: '会社名は必須です' }, { status: 400 });
+  }
+  if (!body.prefecture) {
+    return NextResponse.json({ error: '都道府県を選択してください' }, { status: 400 });
+  }
+
+  // 会社を作成
+  const { data: company, error: companyError } = await supabase
+    .from('companies')
+    .insert({
+      name: body.name,
+      prefecture: body.prefecture,
+      company_role: body.company_role ?? 'both',
+      description: body.description ?? null,
+      address_line1: body.address_line1 ?? null,
+      phone: body.phone ?? null,
+      email: body.email ?? null,
+      website_url: body.website_url ?? null,
+      employee_count: body.employee_count ?? null,
+      capital_amount: body.capital_amount ?? null,
+      established_year: body.established_year ?? null,
+      is_active: true,
+    })
+    .select('id')
+    .single();
+
+  if (companyError || !company) {
+    return NextResponse.json({ error: '会社の作成に失敗しました' }, { status: 500 });
+  }
+
+  // ユーザーのcompany_idを紐付け
+  await supabase
+    .from('users')
+    .update({ company_id: company.id })
+    .eq('id', user.id);
+
+  return NextResponse.json({ id: company.id });
+}
