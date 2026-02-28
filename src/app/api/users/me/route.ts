@@ -4,9 +4,9 @@ import { z } from 'zod';
 
 const updateSchema = z.object({
   full_name: z.string().min(1).max(100).optional(),
-  position: z.string().max(100).optional(),
+  title: z.string().max(100).optional(),
+  department: z.string().max(100).optional(),
   phone: z.string().max(20).optional(),
-  bio: z.string().max(500).optional(),
 });
 
 export async function GET() {
@@ -17,7 +17,7 @@ export async function GET() {
 
   const { data, error } = await supabase
     .from('users')
-    .select('id, full_name, email, role, position, phone, bio, company_id, avatar_url, created_at')
+    .select('id, full_name, role, title, department, phone, company_id, avatar_url, created_at')
     .eq('id', user.id)
     .single();
 

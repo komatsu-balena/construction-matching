@@ -12,12 +12,12 @@ type Tab = 'user' | 'company' | 'licenses' | 'seeking';
 interface Props {
   user: {
     id: string;
-    full_name: string;
-    email: string;
-    position: string;
-    phone: string;
-    bio: string;
-    company_id: string;
+    full_name?: string;
+    title?: string;
+    department?: string;
+    phone?: string;
+    company_id?: string;
+    [key: string]: unknown;
   };
   company: {
     id: string;
@@ -47,27 +47,29 @@ export default function ProfileEditForm({ user, company, selectedLicenses: initL
   const [success, setSuccess] = useState('');
 
   // User form state
+  const u = user as any;
   const [userForm, setUserForm] = useState({
-    full_name: user.full_name ?? '',
-    position: user.position ?? '',
-    phone: user.phone ?? '',
-    bio: user.bio ?? '',
+    full_name: u.full_name ?? '',
+    title: u.title ?? u.position ?? '',
+    department: u.department ?? '',
+    phone: u.phone ?? '',
   });
 
-  // Company form state
+  // Company form state (DBの列名にマッピング)
+  const c = company as any;
   const [companyForm, setCompanyForm] = useState({
-    name: company?.name ?? '',
-    description: company?.description ?? '',
-    prefecture: company?.prefecture ?? '',
-    address: company?.address ?? '',
-    phone: company?.phone ?? '',
-    email: company?.email ?? '',
-    website: company?.website ?? '',
-    company_role: company?.company_role ?? 'both',
-    employee_count: company?.employee_count?.toString() ?? '',
-    capital_amount: company?.capital_amount ? (company.capital_amount / 10000).toString() : '',
-    founded_year: company?.founded_year?.toString() ?? '',
-    seeking_description: company?.seeking_description ?? '',
+    name: c?.name ?? '',
+    description: c?.description ?? '',
+    prefecture: c?.prefecture ?? '',
+    address: c?.address_line1 ?? c?.address ?? '',
+    phone: c?.phone ?? '',
+    email: c?.email ?? '',
+    website: c?.website_url ?? c?.website ?? '',
+    company_role: c?.company_role ?? 'both',
+    employee_count: c?.employee_count?.toString() ?? '',
+    capital_amount: c?.capital_amount ? (c.capital_amount / 10000).toString() : '',
+    founded_year: (c?.established_year ?? c?.founded_year)?.toString() ?? '',
+    seeking_description: c?.seeking_description ?? '',
   });
 
   // Licenses state
@@ -131,10 +133,18 @@ export default function ProfileEditForm({ user, company, selectedLicenses: initL
     setError('');
     try {
       const body = {
-        ...companyForm,
+        name: companyForm.name,
+        description: companyForm.description,
+        prefecture: companyForm.prefecture,
+        address_line1: companyForm.address,
+        phone: companyForm.phone,
+        email: companyForm.email,
+        website_url: companyForm.website,
+        company_role: companyForm.company_role,
+        seeking_description: companyForm.seeking_description,
         employee_count: companyForm.employee_count ? parseInt(companyForm.employee_count) : null,
         capital_amount: companyForm.capital_amount ? parseInt(companyForm.capital_amount) * 10000 : null,
-        founded_year: companyForm.founded_year ? parseInt(companyForm.founded_year) : null,
+        established_year: companyForm.founded_year ? parseInt(companyForm.founded_year) : null,
       };
       const res = await fetch(`/api/companies/${company.id}`, {
         method: 'PUT',
@@ -256,10 +266,20 @@ export default function ProfileEditForm({ user, company, selectedLicenses: initL
               <label className={styles.label}>役職</label>
               <input
                 type="text"
-                value={userForm.position}
-                onChange={(e) => setUserForm({ ...userForm, position: e.target.value })}
+                value={userForm.title}
+                onChange={(e) => setUserForm({ ...userForm, title: e.target.value })}
                 className={styles.input}
                 placeholder="代表取締役"
+              />
+            </div>
+            <div className={styles.field}>
+              <label className={styles.label}>部署</label>
+              <input
+                type="text"
+                value={userForm.department}
+                onChange={(e) => setUserForm({ ...userForm, department: e.target.value })}
+                className={styles.input}
+                placeholder="営業部"
               />
             </div>
             <div className={styles.field}>
@@ -270,16 +290,6 @@ export default function ProfileEditForm({ user, company, selectedLicenses: initL
                 onChange={(e) => setUserForm({ ...userForm, phone: e.target.value })}
                 className={styles.input}
                 placeholder="090-1234-5678"
-              />
-            </div>
-            <div className={styles.field}>
-              <label className={styles.label}>自己紹介</label>
-              <textarea
-                value={userForm.bio}
-                onChange={(e) => setUserForm({ ...userForm, bio: e.target.value })}
-                className={styles.textarea}
-                rows={4}
-                placeholder="自己紹介を入力してください"
               />
             </div>
           </div>
