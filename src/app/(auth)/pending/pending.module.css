@@ -1,0 +1,75 @@
+.page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 24px;
+  background: var(--bg-muted, #F5F7FA);
+}
+
+.card {
+  background: white;
+  border-radius: 16px;
+  padding: 48px 40px;
+  max-width: 480px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+}
+
+.icon {
+  font-size: 56px;
+  margin-bottom: 24px;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.title {
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--navy-900, #1a2744);
+  margin-bottom: 16px;
+  letter-spacing: -0.02em;
+}
+
+.message {
+  font-size: 15px;
+  color: var(--text-secondary, #64748B);
+  line-height: 1.7;
+  margin-bottom: 24px;
+}
+
+.infoBox {
+  background: #EFF6FF;
+  border: 1px solid #BFDBFE;
+  border-radius: 10px;
+  padding: 16px 20px;
+  margin-bottom: 32px;
+}
+
+.infoText {
+  font-size: 13px;
+  color: #1E40AF;
+  line-height: 1.6;
+}
+
+.logoutBtn {
+  width: 100%;
+  padding: 12px;
+  background: transparent;
+  color: var(--text-secondary, #64748B);
+  border: 1.5px solid var(--border, #E2E8F0);
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.logoutBtn:hover {
+  background: var(--bg-muted, #F5F7FA);
+  color: var(--text-primary, #1E293B);
+}

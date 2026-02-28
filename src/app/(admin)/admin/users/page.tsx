@@ -29,7 +29,7 @@ export default async function AdminUsersPage({
       full_name,
       email,
       role,
-      position,
+      title,
       created_at,
       companies(id, name, is_active)
     `, { count: 'exact' })
@@ -93,7 +93,7 @@ export default async function AdminUsersPage({
               full_name: string;
               email: string;
               role: string;
-              position: string;
+              title: string;
               created_at: string;
               companies: { id: string; name: string; is_active: boolean }[] | { id: string; name: string; is_active: boolean } | null;
             }) => {
@@ -125,7 +125,7 @@ export default async function AdminUsersPage({
                     </Link>
                   ) : '—'}
                 </td>
-                <td>{u.position || '—'}</td>
+                <td>{u.title || '—'}</td>
                 <td>{new Date(u.created_at).toLocaleDateString('ja-JP')}</td>
               </tr>
               );

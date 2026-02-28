@@ -5,10 +5,11 @@ import { usePathname } from 'next/navigation';
 import styles from './AdminSidebar.module.css';
 
 const NAV_ITEMS = [
-  { href: '/admin',           icon: '📊', label: 'ダッシュボード', exact: true },
-  { href: '/admin/companies', icon: '🏢', label: '企業管理' },
-  { href: '/admin/users',     icon: '👥', label: 'ユーザー管理' },
-  { href: '/admin/matches',   icon: '🤝', label: 'マッチング管理' },
+  { href: '/admin',                  icon: '📊', label: 'ダッシュボード', exact: true },
+  { href: '/admin/registrations',    icon: '📋', label: '登録申請管理' },
+  { href: '/admin/companies',        icon: '🏢', label: '企業管理' },
+  { href: '/admin/users',            icon: '👥', label: 'ユーザー管理' },
+  { href: '/admin/matches',          icon: '🤝', label: 'マッチング管理' },
 ];
 
 export default function AdminSidebar() {

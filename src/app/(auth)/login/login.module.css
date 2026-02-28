@@ -148,3 +148,10 @@
   border-radius: var(--radius-md);
   border: 1px solid var(--border);
 }
+
+.registerLink {
+  color: var(--navy-600);
+  font-weight: 600;
+  text-decoration: none;
+}
+.registerLink:hover { text-decoration: underline; }

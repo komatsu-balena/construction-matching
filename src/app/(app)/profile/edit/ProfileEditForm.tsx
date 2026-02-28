@@ -170,20 +170,18 @@ export default function ProfileEditForm({ user, company, selectedLicenses: initL
     setSaving(true);
     setError('');
     try {
-      // Save licenses
-      const resLic = await fetch(`/api/companies/${company.id}/licenses`, {
+      // 許可・得意工事を1回のAPIで保存
+      const res = await fetch(`/api/companies/${company.id}/licenses`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ license_type_ids: licenses }),
+        body: JSON.stringify({
+          license_type_ids: licenses,
+          specialty_works: specialtyWorks,
+        }),
       });
-      // Save specialty works
-      const resWork = await fetch(`/api/companies/${company.id}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ specialty_works: specialtyWorks }),
-      });
-      if (!resLic.ok || !resWork.ok) {
-        setError('保存に失敗しました');
+      if (!res.ok) {
+        const d = await res.json();
+        setError(d.error ?? '保存に失敗しました');
       } else {
         setSuccess('許可・得意工事を更新しました');
         setTimeout(() => setSuccess(''), 3000);

@@ -69,15 +69,43 @@ export async function middleware(request: NextRequest) {
 
   const isProtected = protectedPaths.some(path => pathname.startsWith(path));
 
-  if (isProtected && !user) {
-    const url = request.nextUrl.clone();
-    url.pathname = '/login';
-    url.searchParams.set('redirectTo', pathname);
-    return NextResponse.redirect(url);
+  if (isProtected) {
+    if (!user) {
+      const url = request.nextUrl.clone();
+      url.pathname = '/login';
+      url.searchParams.set('redirectTo', pathname);
+      return NextResponse.redirect(url);
+    }
+
+    // 承認待ちユーザー（is_active = false）は /pending へリダイレクト
+    const { data: userData } = await supabase
+      .from('users')
+      .select('is_active')
+      .eq('id', user.id)
+      .single();
+
+    if (userData && userData.is_active === false) {
+      const url = request.nextUrl.clone();
+      url.pathname = '/pending';
+      return NextResponse.redirect(url);
+    }
   }
 
   // 認証済みユーザーがログイン/登録ページにアクセスした場合はリダイレクト
   if (user && (pathname === '/login' || pathname === '/register')) {
+    // 承認待ちユーザーはpendingページへ
+    const { data: userData } = await supabase
+      .from('users')
+      .select('is_active, role')
+      .eq('id', user.id)
+      .single();
+
+    if (userData && userData.is_active === false) {
+      const url = request.nextUrl.clone();
+      url.pathname = '/pending';
+      return NextResponse.redirect(url);
+    }
+
     const url = request.nextUrl.clone();
     url.pathname = '/dashboard';
     return NextResponse.redirect(url);

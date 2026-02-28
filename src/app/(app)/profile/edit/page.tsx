@@ -18,20 +18,24 @@ export default async function ProfileEditPage() {
 
   if (!profile) redirect('/login');
 
-  const company = profile.companies;
+  // Supabase join may return array or single object depending on types — normalize
+  const companyRaw = profile.companies;
+  const company = Array.isArray(companyRaw) ? (companyRaw[0] ?? null) : companyRaw;
   const companyId = profile.company_id as string | null;
 
   const [licensesRes, specialtyWorksRes] = await Promise.all([
     companyId
       ? supabase.from('company_licenses').select('license_type_id').eq('company_id', companyId)
-      : Promise.resolve({ data: [] as { license_type_id: string }[] }),
+      : Promise.resolve({ data: [] as { license_type_id: number }[] }),
     companyId
-      ? supabase.from('company_specialty_works').select('name').eq('company_id', companyId)
-      : Promise.resolve({ data: [] as { name: string }[] }),
+      ? supabase.from('company_specialty_works').select('work_type').eq('company_id', companyId)
+      : Promise.resolve({ data: [] as { work_type: string }[] }),
   ]);
 
-  const selectedLicenses = (licensesRes.data ?? []).map((l: { license_type_id: string }) => l.license_type_id);
-  const specialtyWorks = (specialtyWorksRes.data ?? []).map((s: { name: string }) => s.name);
+  const selectedLicenses = (licensesRes.data ?? []).map((l: { license_type_id: number }) => String(l.license_type_id));
+  const specialtyWorks = (specialtyWorksRes.data ?? [])
+    .map((s: { work_type: string }) => s.work_type)
+    .filter(Boolean);
 
   return (
     <ProfileEditForm

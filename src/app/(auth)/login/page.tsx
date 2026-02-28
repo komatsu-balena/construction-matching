@@ -107,7 +107,11 @@ export default function LoginPage() {
       </form>
 
       <p className={styles.footer}>
-        会員登録をご希望の方は、管理者よりご招待いたします。
+        アカウントをお持ちでない方は{' '}
+        <Link href="/register" className={styles.registerLink}>
+          利用登録申請
+        </Link>
+        {' '}をしてください。
       </p>
     </div>
   );

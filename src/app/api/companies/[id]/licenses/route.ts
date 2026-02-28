@@ -3,10 +3,10 @@ import { createClient } from '@/lib/supabase/server';
 import { z } from 'zod';
 
 const UpdateLicensesSchema = z.object({
-  licenses: z.array(z.object({
-    license_type_id: z.number().min(1).max(29),
-    is_tokutei: z.boolean().default(false),
-  })),
+  // シンプルなIDの配列（文字列・数値どちらも受け付ける）
+  license_type_ids: z.array(z.union([z.number(), z.string()])).optional(),
+  // 得意工事（文字列配列）
+  specialty_works: z.array(z.string()).optional(),
 });
 
 export async function PUT(
@@ -34,19 +34,45 @@ export async function PUT(
     return NextResponse.json({ error: '入力値が不正です' }, { status: 400 });
   }
 
-  // 既存の許可を全削除して再挿入
-  await supabase.from('company_licenses').delete().eq('company_id', id);
+  const { license_type_ids, specialty_works } = parsed.data;
 
-  if (parsed.data.licenses.length > 0) {
-    const insertData = parsed.data.licenses.map((l) => ({
-      company_id: id,
-      license_type_id: l.license_type_id,
-      is_tokutei: l.is_tokutei,
-    }));
+  // 建設業許可の更新
+  if (license_type_ids !== undefined) {
+    await supabase.from('company_licenses').delete().eq('company_id', id);
 
-    const { error } = await supabase.from('company_licenses').insert(insertData);
-    if (error) {
-      return NextResponse.json({ error: '許認可の更新に失敗しました' }, { status: 500 });
+    if (license_type_ids.length > 0) {
+      const insertData = license_type_ids.map((lid) => ({
+        company_id: id,
+        license_type_id: Number(lid),
+        is_tokutei: false,
+      }));
+
+      const { error } = await supabase.from('company_licenses').insert(insertData);
+      if (error) {
+        return NextResponse.json({ error: '許認可の更新に失敗しました' }, { status: 500 });
+      }
+    }
+  }
+
+  // 得意工事の更新
+  if (specialty_works !== undefined) {
+    await supabase.from('company_specialty_works').delete().eq('company_id', id);
+
+    if (specialty_works.length > 0) {
+      const workData = specialty_works
+        .filter((w) => w.trim())
+        .map((w, i) => ({
+          company_id: id,
+          work_type: w.trim(),
+          sort_order: i,
+        }));
+
+      if (workData.length > 0) {
+        const { error } = await supabase.from('company_specialty_works').insert(workData);
+        if (error) {
+          return NextResponse.json({ error: '得意工事の更新に失敗しました' }, { status: 500 });
+        }
+      }
     }
   }
 
