@@ -52,6 +52,7 @@ export async function POST(req: NextRequest) {
       name: companyName,
       company_role: role,
       is_active: true,
+      prefecture: '東京都', // 招待後にプロフィール編集で変更可能
     })
     .select('id')
     .single();
